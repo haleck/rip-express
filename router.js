@@ -7,9 +7,9 @@ import MessagesController from "./controllers/MessagesController.js";
 const router = new Router()
 
 // Users
-router.post('/users/register', UserController.register) // Регистрация пользователя -> id, name, surname
+router.post('/users/register', UserController.register) // Регистрация пользователя -> id, email, name, surname, token
 router.get('/users/getUserInfo/:id', UserController.getUserInfo) // Получение информации о пользователе -> name, surname, status
-router.get('/users/login/:email', UserController.login) // Вход по почте -> id, name, surname, status
+router.post('/users/login', UserController.login) // Вход по почте -> id, name, surname, status, token
 router.put('/users/changeStatus', UserController.changeStatus) // Изменения статуса пользователя -> id, status
 router.get('/users/checkUserExists/:id', UserController.checkUserExists) // Проверка существует ли пользователь с данным id -> true / false
 

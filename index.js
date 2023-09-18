@@ -2,10 +2,12 @@ import express from 'express'
 import mongoose from 'mongoose'
 import router from "./router.js";
 import cors from 'cors'
+import dotenv from 'dotenv'
 
-const PORT = 5000
-const PASSWORD = 'CksVzPDIQC9KWs6B'
-const DB_URL = `mongodb+srv://zdiroog:${PASSWORD}@cluster0.qvbuxuu.mongodb.net/?retryWrites=true&w=majority`
+dotenv.config()
+
+const PORT = process.env.PORT || 5000
+const DB_URL = process.env.ATLAS_URL
 
 const app = express()
 
@@ -15,7 +17,13 @@ app.use('/api', router)
 
 async function startApp() {
     try {
-        await mongoose.connect(DB_URL)
+        try {
+            await mongoose.connect(DB_URL)
+            console.log('MongoDB successfully connected')
+        } catch (e) {
+            console.log(e)
+        }
+
         app.listen(PORT, ()=>console.log("Server started"))
     } catch (e) {
         console.log(e)
