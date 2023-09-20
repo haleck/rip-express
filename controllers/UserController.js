@@ -82,11 +82,17 @@ class UserController {
         try {
             const userId = req.body.id
             const newStatus = req.body.status
+            const token = req.body.token
+
             if (!userId) {
                 return res.status(400).json({message: 'Id пользователя не указан'})
             }
-            await Users.updateOne({_id: userId}, {status: newStatus})
-            return res.json({id: userId, status: newStatus})
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY)
+            if (decodedToken._id !== userId) return res.status(400).json("У вас нет прав на изменение статуса этого пользователя")
+            else {
+                await Users.updateOne({_id: userId}, {status: newStatus})
+                return res.json({id: userId, status: newStatus})
+            }
         } catch (e) {
             res.status(500).json(e)
         }
