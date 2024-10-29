@@ -28,7 +28,7 @@ class MessagesController {
 
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
-            if (decodedToken._id !== messages[0].sender && decodedToken._id !== messages[0].receiver){
+            if (messages.length > 0 && decodedToken._id !== messages[0].sender && decodedToken._id !== messages[0].receiver){
                 return res.status(400).json(messages)
             } else {
                 res.json(messages)

@@ -39,16 +39,16 @@ class PostController {
                 res.status(400).json({message: 'Id поста не указан'})
             }
             let post = await Posts.findById(id)
+            console.log("post:", post)
 
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY)
 
             if (decodedToken._id !== post.author) return res.status(400).json("У вас нет прав для удаления поста чужого пользователя")
             else {
-                console.log('here')
                 if (!post) {
                     return res.status(404).json({ message: 'Пост не найден' });
                 }
-                Posts.deleteOne(post._id)
+                await Posts.deleteOne(post._id)
                 return res.json(post)
             }
         } catch (e) {
