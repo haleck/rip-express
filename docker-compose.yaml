@@ -1,15 +1,18 @@
-version: '3.1'
-
 services:
-
   index:
-    image: haleck/rip-express-index
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.index
+    volumes:
+      - /app/node_modules
     ports:
       - 5000:5000
 
   socket:
-    image: haleck/rip-express-socket
-    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.socket
+    volumes:
+      - /app/node_modules
     ports:
       - 8080:8080

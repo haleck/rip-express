@@ -13,6 +13,7 @@ class PostController {
                 return res.json(post)
             }
         } catch (e) {
+            console.log(res)
             res.status(500).json(e)
         }
     }
